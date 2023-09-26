@@ -1,0 +1,11 @@
+.search-box {
+    width: 600px;
+    height: 45px;
+    font-size: 18px;
+    font-family: "Century Gothic";
+}
+
+.search-button {
+    height: 40px;
+    font-size: 20px;
+}

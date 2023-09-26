@@ -1,0 +1,10 @@
+.container {
+    width: fit-content;
+    margin: auto;
+}
+
+.item {
+    width: 200px;
+    height: auto;
+    font-family: 'Century Gothic';
+}
