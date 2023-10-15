@@ -26,12 +26,19 @@ const Search = () => {
       } else {
         results = asset_register
       }
-      setResults(results)
-      console.log(results);
+      setResults(results);
     } catch(error) {
       console.log(error.message);
     }
   }
+
+  const handleKeypress = e => {
+    // It triggers by pressing the enter key
+    // The keyCode for the Enter key is 13
+    if (e.keyCode === 13) {
+      getAsset();
+    }
+  };
 
   return (
     <div className='text-center'>
@@ -41,6 +48,7 @@ const Search = () => {
         placeholder='What are you looking for?'
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        onKeyDown={handleKeypress}
         />
         <button
         className='search-button duration-200 ml-4 px-3 bg-purple-300 rounded-full text-white drop-shadow-lg hover:bg-purple-400'
