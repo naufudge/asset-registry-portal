@@ -7,6 +7,17 @@
 
 .search-button {
     height: 40px;
-    font-size: 18px;
+    font-size: 17px;
     font-family: "Century Gothic";
+}
+
+.container {
+    width: fit-content;
+    margin: auto;
+}
+
+.item {
+    width: 200px;
+    height: auto;
+    font-family: 'Century Gothic';
 }

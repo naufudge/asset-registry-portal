@@ -1,5 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 NA Asset Register 2023.xlsx
+package-lock.json
+package.json
 
 # dependencies
 /node_modules
