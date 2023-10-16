@@ -1,5 +1,4 @@
 .search-box {
-    width: 600px;
     height: 45px;
     font-size: 18px;
     font-family: "Century Gothic";
@@ -17,7 +16,7 @@
 }
 
 .item {
-    width: 200px;
+    width: 225px;
     height: auto;
     font-family: 'Century Gothic';
 }

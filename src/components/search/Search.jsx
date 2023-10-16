@@ -43,7 +43,7 @@ const Search = () => {
   return (
     <div className='text-center'>
         <input
-        className='search-box px-5 rounded-full my-5 drop-shadow-lg hover:bg-gray-100 hover:cursor-text active:bg-gray-200 focus:outline-none'
+        className='search-box px-5 rounded-full drop-shadow-lg my-5 md:w-[500px] sm:w-[350px] hover:bg-gray-100 hover:cursor-text active:bg-gray-200 focus:outline-none'
         type='text'
         placeholder='What are you looking for?'
         value={searchTerm}
@@ -56,9 +56,10 @@ const Search = () => {
         >
           Search
         </button>
-        <div className='container text-center grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10'>
+
+        <div className='container text-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-7 place-items-center'>
         {results.map((item, index) => (
-          <div key={index} className='text-sm item bg-white rounded-md drop-shadow-lg p-4 transform duration-300 hover:bg-purple-300 hover:cursor-pointer hover:scale-125'>
+          <div key={index} className='text-sm item bg-white rounded-md drop-shadow-md p-4 transform duration-300 hover:bg-purple-300 hover:cursor-pointer hover:scale-125'>
             <span className='font-bold'>{item[1]}</span>
             <br/>
             <span>{item[0]}</span>
