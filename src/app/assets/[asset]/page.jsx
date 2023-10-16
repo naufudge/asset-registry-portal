@@ -53,7 +53,7 @@ export default function assetPage({ params: { assetId } }) {
 
 
                 <p className="text-2xl">{results[1]}</p>
-                <h1><b>Inventory Number:</b> {results[1]}</h1>
+                <h1><b>Inventory Number:</b> {results[0]}</h1>
                 <h1><b>Location:</b> {results[2]}</h1>
             </Suspense>
         </div>
