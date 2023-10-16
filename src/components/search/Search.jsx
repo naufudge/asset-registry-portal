@@ -4,8 +4,10 @@ import React from 'react'
 import './search.css'
 import { useState } from 'react'
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const Search = () => {
+  const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [results, setResults] = useState([])
 
@@ -28,7 +30,7 @@ const Search = () => {
       }
       setResults(results);
     } catch(error) {
-      console.log(error.message);
+      console.log("doesn't matter")
     }
   }
 
@@ -39,6 +41,10 @@ const Search = () => {
       getAsset();
     }
   };
+
+  const asset_redirect = (id) => {
+    router.push(`/assets/${id.toString()}`)
+  }
 
   return (
     <div className='text-center'>
@@ -59,7 +65,10 @@ const Search = () => {
 
         <div className='container text-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-7 place-items-center'>
         {results.map((item, index) => (
-          <div key={index} className='text-sm item bg-white rounded-md drop-shadow-md p-4 transform duration-300 hover:bg-purple-300 hover:cursor-pointer hover:scale-125'>
+          <div 
+          key={index} 
+          className='text-sm item bg-white rounded-md drop-shadow-md p-4 transform duration-300 hover:bg-purple-300 hover:cursor-pointer hover:scale-125'
+          onClick={() => asset_redirect(item[0])}>
             <span className='font-bold'>{item[1]}</span>
             <br/>
             <span>{item[0]}</span>

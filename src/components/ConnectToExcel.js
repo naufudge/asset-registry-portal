@@ -38,5 +38,16 @@ export const asset_registry = (search = null) => {
         }
         // console.log(results)
     }
-    return all_results;
+    if (search) {
+        var results = [];
+        all_results.filter(item => {
+            if (item[0].toString() === search.toString()) {
+                results.push(item)
+            }
+        })
+        console.log("found the asset");
+        return results;
+    } else {
+        return all_results;
+    }
 }

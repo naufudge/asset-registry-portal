@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Search from '../components/search/Search'
 
 // border-radius: 15px;
 // background: linear-gradient(92deg, #4C3CAC 1.68%, #7761FF 100%);
@@ -10,6 +11,7 @@ export default function Home() {
       <h1 className='py-5 text-center text-6xl text-transparent font-bold bg-clip-text bg-gradient-to-r from-cyan-500 via-purple-500 to-blue-500'>
         Asset Registry Portal
       </h1>
+      <Search/>
     {/* <div className='container'>
       <div className='row'>
         <div className='box'>Goodbye World</div>
