@@ -8,29 +8,18 @@ export const asset_registry = (search = null) => {
         const worksheet = workbook.Sheets[workbook.SheetNames[j]];
         // console.log(workbook.SheetNames[j])
         const results = [];
-        for (let i = 0; i <= 50; i++) {
+        for (let i = 0; i <= 60; i++) {
             try {
-                if (results.length) {
-                    if (results[0][1].toLowerCase() === "sap asset no." || results[0][1].toLowerCase() === "sap asset no") {
-                        const asset_number = worksheet[`B${i}`].v;
-                        const name = worksheet[`D${i}`].v;
-                        const location = worksheet[`I${i}`].v;
-                        results.push([asset_number, name, location])
-                        all_results.push([asset_number, name, location])
-                    } else {
-                        const asset_number = worksheet[`B${i}`].v;
-                        const name = worksheet[`C${i}`].v;
-                        const location = worksheet[`H${i}`].v;
-                        results.push([asset_number, name, location])
-                        all_results.push([asset_number, name, location])
-                    }
-                } else {
-                    const asset_number = worksheet[`B${i}`].v;
-                    const name = worksheet[`C${i}`].v;
-                    const location = worksheet[`H${i}`].v;
-                    results.push([asset_number, name, location])
+                const asset_number = worksheet[`B${i}`].v;
+                if (asset_number.toLowerCase() === "asset number") {
+                    continue;
                 }
-                
+                const name = worksheet[`D${i}`].v;
+                const location = worksheet[`I${i}`].v;
+                const condition = worksheet[`L${i}`].v;
+
+                results.push([asset_number, name, location, condition])
+                all_results.push([asset_number, name, location, condition])
             } catch (error) {
                 // console.log(`${i} not found`)
                 continue;
