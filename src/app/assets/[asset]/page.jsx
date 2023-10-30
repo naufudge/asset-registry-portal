@@ -16,20 +16,13 @@ export default function assetPage({ params: { assetId } }) {
       const getAsset = async () => {
         try {
           const response = await axios.get('../api/assets')
-          return response;
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      getAsset().then(function(result) {
-        try{
           var results = [];
-          const asset_register = result.data.assets
+          const asset_register = response.data.assets
           const searchTerm =  path.split("/").pop();
-
           if (searchTerm) { 
             asset_register.filter(item => {
-              if(searchTerm.toString() === item[0].toString()) {
+              if(searchTerm.toString() === item[0].toString().trim()) {
+                console.log(item)
                 results.push(item);
               }
             })
@@ -39,10 +32,13 @@ export default function assetPage({ params: { assetId } }) {
           setResults(results[0], results[1], results[2])
           return results;
         } catch (error) {
-          console.log(error)
+          // console.log(error.message)
+          console.log("nothing to see here")
         }
-      }) 
-    }, [])
+      }
+
+      if (results.length === 0) getAsset();
+    }, [results])
    
     return (
         <div className="main grid text-center place-items-center">
