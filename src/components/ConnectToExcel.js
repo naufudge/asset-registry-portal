@@ -14,9 +14,9 @@ export const asset_registry = (search = null) => {
                 if (asset_number.toLowerCase() === "asset number") {
                     continue;
                 }
-                const name = worksheet[`D${i}`].v;
-                const location = worksheet[`I${i}`].v;
-                const condition = worksheet[`L${i}`].v;
+                const name = worksheet[`D${i}`]?.v;
+                const location = worksheet[`I${i}`]?.v;
+                const condition = worksheet[`L${i}`]?.v;
 
                 results.push([asset_number, name, location, condition])
                 all_results.push([asset_number, name, location, condition])
