@@ -63,18 +63,18 @@ const Search = () => {
           Search
         </button>
 
-        <div className='container text-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-7 place-items-center'>
+        <div className='container text-center items-stretch grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-7 place-items-center'>
         {results.map((item, index) => (
           <div 
           key={index} 
-          className='text-sm item bg-white rounded-md drop-shadow-md p-4 transform duration-300 hover:bg-purple-300 hover:cursor-pointer hover:scale-125'
+          className='text-sm item h-full bg-white rounded-md drop-shadow-md p-4 transform duration-300 hover:bg-purple-300 hover:cursor-pointer hover:scale-125'
           onClick={() => asset_redirect(item[0])}>
             <span className='font-bold'>{item[1]}</span>
             <br/>
             <span>{item[0]}</span>
             <br/>
             <span>{item[2]}</span>
-          </div>
+            </div>
         ))}
       </div>
     </div>
