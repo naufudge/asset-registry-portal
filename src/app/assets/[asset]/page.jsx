@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, Suspense, useState } from "react";
 import './asset.css'
 
-export default function assetPage({ params: { assetId } }) {
+export default function AssetPage({ params: { assetId } }) {
     const router = useRouter()
     const path = usePathname()
 
