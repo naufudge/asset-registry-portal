@@ -1,53 +1,45 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import axios from "axios";
 import { useEffect, Suspense, useState } from "react";
 import './asset.css'
 
-
-
 export default function assetPage({ params: { assetId } }) {
     const router = useRouter()
-    const [results, setResults] = useState([]);
     const path = usePathname()
-    
+
+    const [assetGotten, setAssetGotten] = useState(false)
+    const [asset, setAsset] = useState({
+      "asset_number": "",
+      "sap_number": "",
+      "name": "",
+      "present_location": "",
+      "condition": ""
+    })
+
     useEffect(() => {
       const getAsset = async () => {
         try {
-          const response = await axios.get('../api/assets')
-          var results = [];
-          const asset_register = response.data.assets
           const searchTerm =  path.split("/").pop();
-          if (searchTerm) { 
-            asset_register.filter(item => {
-              if(searchTerm.toString() === item[0].toString().trim()) {
-                console.log(item)
-                results.push(item);
-              }
-            })
-          } else {
-            results = asset_register
-          }
-          setResults(results[0], results[1], results[2])
-          return results;
+          const response = await fetch(`http://10.12.29.68:8000/asset/${searchTerm}`)
+          const _asset = await response.json()
+          setAsset(_asset)
+          setAssetGotten(true)
         } catch (error) {
-          // console.log(error.message)
-          console.log("nothing to see here")
+          console.log("There was an error", error.message)
         }
       }
-
-      if (results.length === 0) getAsset();
-    }, [results])
+      if (!assetGotten) getAsset();
+    }, [assetGotten, asset])
    
     return (
         <div className="main grid text-center place-items-center">
             <Suspense fallback={<h2>Loading..</h2>}>
                 <div className="main-card mt-10 m-3 p-10 drop-shadow-lg bg-white rounded-2xl items-center justify-center">
-                  <p className="text-2xl font-bold">{results[1]}</p>
+                  <p className="text-2xl font-bold">{asset.name}</p>
                   <br />
-                  <h1><b>Inventory Number:</b> {results[0]}</h1>
-                  <h1><b>Location:</b> {results[2]}</h1>
+                  <h1><b>Inventory Number:</b> {asset.asset_number}</h1>
+                  <h1><b>Location:</b> {asset.present_location}</h1>
                 </div>
 
                 <button 

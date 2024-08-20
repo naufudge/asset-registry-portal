@@ -1,36 +1,58 @@
 'use client';
 
-import React from 'react'
 import './search.css'
-import { useState } from 'react'
-import axios from 'axios';
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import Loading from '../../loading'
+import AssetCounter from './assetCounter'
 
 const Search = () => {
   const router = useRouter()
+  
   const [searchTerm, setSearchTerm] = useState('')
   const [results, setResults] = useState([])
+  const [assetRegister, setAssetRegister] = useState(null)
+  const [assetCount, setAssetCount] = useState(0)
+
+  useEffect(() => {
+    async function getAssetsFromApi() {
+      const response = await fetch("http://10.12.29.68:8000/assets")
+      const asset_register = await response.json()
+      if (asset_register.length != 0) {
+        setAssetRegister(asset_register)
+        setAssetCount(asset_register.length)
+      }
+    }
+
+    try {
+      if (!assetRegister) getAssetsFromApi()
+    } catch (error) {
+      console.log(error.message)
+    }
+  }, [assetRegister, assetCount])
 
   const getAsset = async () => {
     try {
       var results = [];
-      const response = await axios.get('api/assets');
-      const asset_register = response.data.assets
       if (searchTerm) {
-        asset_register.filter(item => {
-          if(item[0].toLowerCase().startsWith(searchTerm.toLowerCase()) ||
-          item[0].toLowerCase().includes(searchTerm.toLowerCase())) {
+        const _search = searchTerm.toLowerCase()
+        assetRegister.filter(item => {
+          if(item.name.toLowerCase().startsWith(_search) ||
+          item.name.toLowerCase().includes(_search)) {
             results.push(item);
-          } else if (item[1].toLowerCase().includes(searchTerm.toLowerCase())) {
+          } else if (item.asset_number.toLowerCase().includes(_search)) {
+            results.push(item);
+          } else if (item.present_location.toLowerCase().includes(_search)) {
             results.push(item);
           }
         })
       } else {
-        results = asset_register
+        results = assetRegister
       }
       setResults(results);
     } catch(error) {
-      console.log("doesn't matter")
+      console.log(error.message)
     }
   }
 
@@ -48,12 +70,18 @@ const Search = () => {
 
   return (
     <div className='text-center'>
+      <Suspense fallback={<Loading />}>
+        <AssetCounter count={assetCount} />
+      </Suspense>
         <input
         className='search-box px-5 rounded-full drop-shadow-lg my-5 md:w-[500px] sm:w-[350px] hover:bg-gray-100 hover:cursor-text active:bg-gray-200 focus:outline-none'
         type='text'
         placeholder='What are you looking for?'
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={(e) => {
+          setSearchTerm(e.target.value)
+          getAsset()
+        }}
         onKeyDown={handleKeypress}
         />
         <button
@@ -65,16 +93,25 @@ const Search = () => {
 
         <div className='container text-center items-stretch grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-7 place-items-center'>
         {results.map((item, index) => (
-          <div 
-          key={index} 
-          className='text-sm item h-full bg-white rounded-md drop-shadow-md p-4 transform duration-300 hover:bg-purple-300 hover:cursor-pointer hover:scale-125'
-          onClick={() => asset_redirect(item[0])}>
-            <span className='font-bold'>{item[1]}</span>
-            <br/>
-            <span>{item[0]}</span>
-            <br/>
-            <span>{item[2]}</span>
+          // <div 
+          // key={index} 
+          // className='text-sm item h-full bg-white rounded-md drop-shadow-md p-5 transform duration-300 hover:bg-purple-300 hover:cursor-pointer hover:scale-125'
+          // onClick={() => asset_redirect(item.asset_number)}>
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className='text-sm item h-full bg-white rounded-md drop-shadow-md p-5 transform duration-300 hover:bg-purple-300 hover:cursor-pointer hover:scale-125'
+            onClick={() => asset_redirect(item.asset_number)}
+          >
+            <div className='grid-cols-1'>
+              <div className='font-bold'>{item.name}</div>
+              <div>{item.asset_number}</div>
+              <div>{item.present_location}</div>
             </div>
+            </motion.div>
+            
         ))}
       </div>
     </div>
